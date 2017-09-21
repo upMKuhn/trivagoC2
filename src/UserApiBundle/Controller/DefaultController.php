@@ -21,11 +21,4 @@ class DefaultController extends Controller
         return $this->render('UserApiBundle:Default:index.html.twig');
     }
 
-    /**
-     * @Route("/blurp")
-     */
-    public function blurpAction()
-    {
-        return $this->render('UserApiBundle:Default:index.html.twig');
-    }
 }

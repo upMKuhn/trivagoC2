@@ -26,6 +26,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     private $entityManager;
 
+    public function save(User $user){
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
     /**
      * Loads the user for the given username.
      *
@@ -81,6 +86,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             throw new UnsupportedUserException('Only UserApiBundle.User supported here in UserApiBundle.UserRepository');
         return $this->loadUserByUsername($user->getUsername());
     }
+
+
 
     /**
      * Whether this provider supports the given user class.

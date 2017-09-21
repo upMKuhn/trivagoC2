@@ -4,6 +4,7 @@ namespace UserApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,7 +19,7 @@ use UserApiBundle\Security\User\UserProvider;
  * @package UserApiBundle\Controller
  * @Route("api/login/",service="UserApiBundle.AuthTest")
  */
-class AuthTestController extends Controller
+class LoginTestController extends Controller
 {
 
     /**
@@ -36,18 +37,31 @@ class AuthTestController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function adminAction($id, Request $request)
+    public function loginTestAction($id, Request $request)
     {
         $data = $this->repo->loadUserByUsername($id);
         return new JsonResponse($data->serialize(), 200, array(), true);
-        /**
-        return new JsonResponse(array(
-            'id' => $data->getId(),
-            'username' => $data->getUsername(),
-            'email' => $data->getEmail(),
-            'rolesAsInt' => $data->getRoleAsInt(),
-        ),200 , array(), true);
-         */
     }
+
+    /**
+     * @Route("\api\register\")
+     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Method({"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function registerAction(Request $request)
+    {
+        $response = new JsonResponse("Try it with a request body", 400, array(), true);
+        $body = $request->getContent();
+        if(!empty($body)){
+            $body = json_decode($body, true);
+            $user = User::create($body['username'], $body['password'], $body['email']);
+            $this->repo->
+            $response = new JsonResponse($user->serialize(), 200, array(), true);
+        }
+
+        return $response;
+    }
+
 
 }
