@@ -1,0 +1,35 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    role_hierarchy:
+      ROLE_ADMIN: [ROLE_HERO, ROLE_USER]
+      ROLE_HERO: [ROLE_USER]
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+       our_db_provider:
+              entity:
+                class: UserApiBundle\Entity\AdvancedUser
+
+      #UserProvider:
+       #   id: UserApiBundle\Security\User\UserProvider
+
+    encoders:
+        UserApiBundle\Entity\AdvancedUser:
+            algorithm: bcrypt
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        api:
+            pattern: ^/api
+            http_basic: ~
+            stateless:  true
+            provider: our_db_provider
+
+    access_control:
+      - { path: ^/api, roles: [ROLE_USER]}

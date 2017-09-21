@@ -1,0 +1,34 @@
+{
+  "name": "trivagoc2",
+  "version": "1.0.0",
+  "description": "trivagoC2 =========",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-sass": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "http://git.trivago.trv/scm/pse-side-projects/trivago-jade.git",
+
+    },
+    {
+      "type": "git",
+      "url": "http://git.trivago.trv/scm/pse-side-projects/api-server.git",
+    }
+  ],
+  "author": "",
+  "license": "ISC"
+}
+
+

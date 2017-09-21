@@ -1,0 +1,7 @@
+app:
+    resource: '@UserApiBundle/Controller/'
+    type: annotation
+json_api_routes:
+    prefix: /api/db
+    resource: .
+    type: json_api

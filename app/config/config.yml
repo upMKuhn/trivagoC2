@@ -1,0 +1,233 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@UserApiBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    translator: ~
+    csrf_protection:
+        enabled: true
+    #esi: ~
+    #translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+      transport: gmail
+      username:  'asdjkljklasdgf@gmail.com'
+      password:  'W3lcome!'
+      encryption: 'ssl'
+      auth_mode: 'login'
+      spool: { type: memory }
+
+
+trivago_jade:
+
+    # For example include=locationPreferences.country.cities will fail since it's 3 level of relationship
+    security:
+        enabled: true
+        default_manipulate_role: ROLE_HERO
+        default_read_role: ROLE_USER # Default role for reading any resource. This can be changed on each resource.
+    read:
+        # The maximum number of items per page
+        max_per_page:         50
+        # The default number of items per page.
+        default_per_page:     10
+        # If enabled the repository will also fetches the total count of the results and it will be returned in the api.
+        fetch_total_count:    true
+
+        max_relationship_depth: 4 # This config limits the consumer of how many level of include it can request.
+    manipulate:
+        include_relationships: true
+        on_update_method: updated # This is the function called on an object when it's updated. The object does not need to have this method. Mostly used to update updatedAt field.
+        create_method: create # This is a static method needed on each entity that allows creation of the entity.
+
+    resources:
+        -
+            name: users # This is the name that is also used in the url. So to fetch the list of countries you access /countries
+            # You can use any alphanumeric character together with _ and -
+            entity_class: UserApiBundle\Entity\AdvancedUser # The class of the entity
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+            relationships:
+              -
+                name: issueSubscriptions
+                type: issueSubscribers
+              -
+                name: floorSubscriptions
+                type: floorSubscriptions
+        -
+            name: buildings # This is the name that is also used in the url. So to fetch the list of countries you access /countries
+            entity_class: UserApiBundle\Entity\Building # The class of the entity
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+            relationships:
+              -
+                name: floors
+                type: BuildingFloor
+        -
+            name: BuildingFloor # This is the name that is also used in the url. So to fetch the list of countries you access /countries
+            entity_class: UserApiBundle\Entity\BuildingFloor # The class of the entity
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+            relationships:
+              -
+                name: building
+                type: buildings
+              -
+                 name: issues
+                 type: issues
+              -
+                 name: subscriptions
+                 type: floorSubscriptions
+
+        -
+            name: issues
+            entity_class: UserApiBundle\Entity\Issue
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+            value_objects:        []
+            relationships:
+                -
+                  name: subscriptions
+                  type: issueSubscribers
+                -
+                  name: floor
+                  type: BuildingFloor
+                -
+                  name: state
+                  type: issueStates
+                -
+                  name: priority
+                  type: issuePriorities
+                -
+                  name: category
+                  type: issueCategories
+                -
+                  name: creator
+                  type: users
+                -
+                  name: comments
+                  type: issueComments
+            roles:
+                  create: ROLE_USER
+                  update: ROLE_HERO
+                  delete: ROLE_HERO
+        -
+            name: issueStates
+            entity_class: UserApiBundle\Entity\IssueState
+            allowed_actions: [] # Specifies the allow actions
+        -
+            name: issuePriorities
+            entity_class: UserApiBundle\Entity\IssuePriority
+            allowed_actions: [] # Specifies the allow actions
+        -
+            name: issueCategories
+            entity_class: UserApiBundle\Entity\IssueCategory
+            allowed_actions: [] # Specifies the allow actions
+
+        -
+            name: issueComments
+            entity_class: UserApiBundle\Entity\IssueComment
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+
+            relationships:
+                -
+                  name: author
+                  type: users
+                -
+                  name: issue
+                  type: issues
+
+        -
+            name: issueStates
+            entity_class: UserApiBundle\Entity\IssueState
+            allowed_actions: [] # Specifies the allow actions
+        -
+            name: issuePriorities
+            entity_class: UserApiBundle\Entity\IssuePriority
+            allowed_actions: [] # Specifies the allow actions
+        -
+            name: issueCategories
+            entity_class: UserApiBundle\Entity\IssueCategory
+            allowed_actions: [] # Specifies the allow actions
+        -
+            name: issueSubscribers
+            entity_class: UserApiBundle\Entity\IssueSubscription
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+            relationships:
+                -
+                  name: subscriber
+                  type: users
+                -
+                  name: issue
+                  type: issues
+            roles:
+                  create: ROLE_USER
+                  update: ROLE_USER
+                  delete: ROLE_USER
+
+        -
+            name: floorSubscriptions
+            entity_class: UserApiBundle\Entity\FloorSubscription
+            allowed_actions: [create, update, delete] # Specifies the allow actions
+            relationships:
+                -
+                  name: subscriber
+                  type: users
+                -
+                  name: floor
+                  type: BuildingFloor
+            roles:
+                  create: ROLE_USER
+                  update: ROLE_USER
+                  delete: ROLE_USER

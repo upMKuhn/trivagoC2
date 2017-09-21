@@ -1,0 +1,8 @@
+
+{% block navbar %}
+    {%if(user != null)  %}
+        {% include 'compontents/logedInNavbar.html.twig' %}
+    {% else %}
+        {% include 'compontents/logedOutNavbar.html.twig' %}
+    {% endif %}
+{% endblock %}

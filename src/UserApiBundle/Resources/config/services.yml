@@ -1,0 +1,25 @@
+services:
+
+    #trivago_jade.listener
+    UserApiBundle\Security\User\UserPasswordManipulationLister:
+      tags: [trivago_jade.listener]
+      arguments: ['@security.password_encoder']
+
+    UserApiBundle\Services\IssueManipulationLister:
+      tags: [trivago_jade.listener]
+      arguments: ['@UserApiBundle\Services\IssueMailingService', "@=service('doctrine.orm.entity_manager')"]
+    UserApiBundle\Services\CommentManipulationLister:
+      tags: [trivago_jade.listener]
+      arguments: ['@UserApiBundle\Services\IssueMailingService', "@=service('doctrine.orm.entity_manager')"]
+    UserApiBundle\Services\SubscriptionManipulationLister:
+      tags: [trivago_jade.listener]
+      arguments: ["@security.token_storage"]
+
+    UserApiBundle\Services\IssueMailingService:
+      arguments: ["@Swift_Mailer", "@templating", "@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:IssueSubscription')",  "@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:FloorSubscription')"]
+    UserApiBundle\Security\ApiKeyAuthenticator:
+      arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:User')"]
+
+    UserApiBundle.AuthTest:
+      class: UserApiBundle\Controller\AuthTestController
+      arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:AdvancedUser')"]
