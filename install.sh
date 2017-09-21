@@ -3,10 +3,9 @@
 sudo apt-get install apache2
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 sudo apt-get update
-
-
-
 git clone https://github.com/upMKuhn/trivagoC2.git
+cd trivagoC2
+
 php bin/symfony_requirements
 composer install --no-dev --optimize-autoloader
 php bin/console doctrine:migrations:execute 1
