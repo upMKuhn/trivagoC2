@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b072bfc1f04d647bdb6b1f8a8da9c72",
+    "content-hash": "197f57260b2b6ba15e77de8393682851",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2655,11 +2655,11 @@
         },
         {
             "name": "trivago/jade",
-            "version": "v0.5.1",
+            "version": "v0.5.3",
             "source": {
                 "type": "git",
                 "url": "http://git.trivago.trv/scm/pse-side-projects/trivago-jade.git",
-                "reference": "b7e72504d0bd525973359deb589884315cefe151"
+                "reference": "62e4e8066300d91720be4d397d783777fe685d2b"
             },
             "require": {
                 "doctrine/doctrine-bundle": "^1.6",
@@ -2680,7 +2680,7 @@
                 }
             ],
             "description": "A symfony library that allows you to easily expose the doctrine entities and manipulate them using json api.",
-            "time": "2017-09-21T08:33:57+00:00"
+            "time": "2017-09-21T10:04:47+00:00"
         },
         {
             "name": "twig/twig",
