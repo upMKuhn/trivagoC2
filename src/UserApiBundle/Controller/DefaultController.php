@@ -40,7 +40,7 @@ class DefaultController extends Controller
      */
     public function directToAngularAction(Request $request)
     {
-         $file = new File('index.html');
+         $file = new File('assets' . $request->getRequestUri());
          $content = $file->openFile('r')->fread($file->getSize());
          return new Response($content, 200);
     }

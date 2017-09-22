@@ -15,7 +15,8 @@ php bin/console cache:warmup --env=prod --no-debug
 
 git clone https://github.com/upMKuhn/trivagoC2-frontEnd.git
 cd trivagoC2-frontEnd
-npm run-script build --prod
+npm install --production --env=prod
+npm run-script build:prod
 cp dist ../web
 
  
