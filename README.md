@@ -1,4 +1,5 @@
 trivagoC2
 =========
 
-A Symfony project created on August 21, 2017, 3:29 pm.
+installation sh -c 
+"$(curl -sSL https://raw.githubusercontent.com/upMKuhn/trivagoC2/master/install.sh)"
