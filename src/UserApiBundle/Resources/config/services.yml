@@ -22,4 +22,4 @@ services:
 
     UserApiBundle.AuthTest:
       class: UserApiBundle\Controller\AuthTestController
-      arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:AdvancedUser')"]
+      arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:AdvancedUser')",'@security.password_encoder']

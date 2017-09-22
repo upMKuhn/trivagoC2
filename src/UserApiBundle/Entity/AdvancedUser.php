@@ -90,10 +90,15 @@ class AdvancedUser implements AdvancedUserInterface,  \Serializable
      * @param string $password
      * @param string $email
      * @param array $roles
-     * @return User
+     * @return AdvancedUser
      */
     public static function  create($username, $password, $email, $roles = ['ROLE_USER']) {
-        parent::create($username, $password, $email, $roles);
+        $user = new AdvancedUser();
+        $user->email = $email;
+        $user->passwordPlain = $password;
+        $user->username = $username;
+        $user->setRoles($roles);
+        return $user;
     }
 
 

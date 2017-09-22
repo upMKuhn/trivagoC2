@@ -5,3 +5,8 @@ json_api_routes:
     prefix: /api/db
     resource: .
     type: json_api
+route1:
+  path: /{req}
+  defaults: { _controller: UserApiBundle:Default:directToAngular }
+  requirements:
+      req: ".*"

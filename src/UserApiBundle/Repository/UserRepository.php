@@ -45,6 +45,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             ->getOneOrNullResult();
     }
 
+    public function save($user){
+        $em = parent::getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
+
     /**
      * Loads the user for the given username.
      *

@@ -4,6 +4,12 @@ namespace UserApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use UserApiBundle\Repository\UserRepository;
 
 
@@ -13,8 +19,15 @@ class DefaultController extends Controller
 {
 
 
+    private $fileSys;
+    public function __construct()
+    {
+        $this->fileSys = new Filesystem();
+    }
+
     /**
      * @Route("/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -22,10 +35,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/blurp")
+     * @param Request $request
+     * @return null|Response
      */
-    public function blurpAction()
+    public function directToAngularAction(Request $request)
     {
-        return $this->render('UserApiBundle:Default:index.html.twig');
+         $file = new File('index.html');
+         $content = $file->openFile('r')->fread($file->getSize());
+         return new Response($content, 200);
     }
+
+
+    private function canRedirectToFile(){
+
+    }
+
 }
