@@ -34,7 +34,6 @@ class DefaultController extends Controller
         return $this->render('UserApiBundle:Default:index.html.twig');
     }
 
-<<<<<<< HEAD
     /**
      * @param Request $request
      * @return null|Response
@@ -51,6 +50,4 @@ class DefaultController extends Controller
 
     }
 
-=======
->>>>>>> UserRegister
 }
