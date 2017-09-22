@@ -21,5 +21,10 @@ services:
       arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:User')"]
 
     UserApiBundle.AuthTest:
+<<<<<<< HEAD
       class: UserApiBundle\Controller\AuthTestController
       arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:AdvancedUser')",'@security.password_encoder']
+=======
+      class: UserApiBundle\Controller\LoginTestController
+      arguments: ["@=service('doctrine.orm.entity_manager').getRepository('UserApiBundle:AdvancedUser')"]
+>>>>>>> UserRegister
