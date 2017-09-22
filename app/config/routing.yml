@@ -6,6 +6,7 @@ json_api_routes:
     resource: .
     type: json_api
 route1:
-    path:     /{path}
-    defaults: { _controller: UserApiBundle:Default:directToAngular }
-    requirements: { path: “(?!api).+” }
+  path: /{req}
+  defaults: { _controller: UserApiBundle:Default:directToAngular }
+  requirements:
+      req: ".*"
