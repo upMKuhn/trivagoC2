@@ -35,9 +35,8 @@ class DefaultController extends Controller
         $path = 'assets' . $request->getRequestUri();
 
         if(is_file($path)) {
-            $file = new File($path);
-            $content = $file->openFile('r')->fread($file->getSize());
-            return new Response($content, 200);
+            return $this->redirect($path);
+
         } else {
             $file = new File('assets/index.html');
             $content = $file->openFile('r')->fread($file->getSize());
